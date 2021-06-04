@@ -184,4 +184,33 @@ public class Tests {
                 .shouldHave(Condition.visible, Duration.ofSeconds(15));
         $("[data-test-id='notification'] .notification__content").shouldHave(text(date));
     }
+
+    @Test
+    void shouldTestOrderWithDropdownList() {
+        String date = LocalDate.now().plusDays(3).format(ofPattern("dd.MM.yyyy"));
+        $("[data-test-id='city'] .input__control").setValue("Са");
+        $(".input__menu").find(withText("Самара")).click();
+        $("[data-test-id='date'] .input__control").doubleClick().sendKeys(DELETE, date);
+        $("[data-test-id='name'] .input__control").setValue("Мария Иванова");
+        $("[data-test-id='phone'] .input__control").setValue("+79999999999");
+        $("[data-test-id='agreement'] .checkbox__box").click();
+        $$("button").find(Condition.exactText("Забронировать")).click();
+        $(withText("Встреча успешно забронирована"))
+                .shouldHave(Condition.visible, Duration.ofSeconds(15));
+        $("[data-test-id='notification'] .notification__content").shouldHave(text(date));
+    }
+
+    @Test
+    void shouldTestOrderWithCalendar() {
+        String date = LocalDate.now().plusDays(7).format(ofPattern("dd.MM.yyyy"));
+        $("[data-test-id='city'] .input__control").setValue("Самара");
+        $("[data-test-id='date'] .input__control").doubleClick().sendKeys(DELETE, date);
+        $(".calendar-input__calendar-wrapper").doubleClick();
+        $("[data-test-id='name'] .input__control").setValue("Мария Иванова");
+        $("[data-test-id='phone'] .input__control").setValue("+79999999999");
+        $("[data-test-id='agreement'] .checkbox__box").click();
+        $$("button").find(Condition.exactText("Забронировать")).click();
+        $(withText("Встреча успешно забронирована"))
+                .shouldHave(Condition.visible, Duration.ofSeconds(15));
+    }
 }

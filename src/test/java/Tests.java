@@ -1,12 +1,15 @@
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selectors;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 
 import java.time.Duration;
 import java.time.LocalDate;
 
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.byName;
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
 import static java.time.format.DateTimeFormatter.ofPattern;
@@ -204,8 +207,8 @@ public class Tests {
     void shouldTestOrderWithCalendar() {
         String date = LocalDate.now().plusDays(7).format(ofPattern("dd.MM.yyyy"));
         $("[data-test-id='city'] .input__control").setValue("Самара");
-        $("[data-test-id='date'] .input__control").doubleClick().sendKeys(DELETE, date);
-        $(".calendar-input__calendar-wrapper").doubleClick();
+        $(".icon-button__content").click();
+        $("[data-test-id='date'] .input__control").doubleClick().sendKeys(date);
         $("[data-test-id='name'] .input__control").setValue("Мария Иванова");
         $("[data-test-id='phone'] .input__control").setValue("+79999999999");
         $("[data-test-id='agreement'] .checkbox__box").click();
